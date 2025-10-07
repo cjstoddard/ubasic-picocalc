@@ -22,7 +22,7 @@ This assumes you have the SDK installed and working.
 
 > cmake -DPICO_BOARD=pico2 ..
 
-> make -j 4
+> make
 
 --------------------
 
