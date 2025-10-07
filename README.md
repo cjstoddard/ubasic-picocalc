@@ -2,23 +2,30 @@
 
 This is a port of [uBasic](https://github.com/adamdunkels/ubasic) to the PicoCalc using [picocalc-text-starter](https://github.com/BlairLeduc/picocalc-text-starter). This is a straight up port, the only thing I added was a REPL command shell for loading and saving programs to the SD Card. Please consider this Alpha software, it is not extensively tested and most assuradly has bugs and will probably fail in spectacular ways. It probably needs an editor, a way to run programs interactively and uBasic needs to be expanded to be more useful. This was more of a proof of concept project than it was to build something complete and useful, so it is unlikely that I will do much more with it.
 
+Please goto the uBasic github repo and read the documentation, uBasic is fairly limited in what it can do, so don't be too surprised if things don't work the way you want them to. In all fairness, this lacks too many features, including access to the GPIO, to make it super useful for anything other than a toy. I use PicoMite Basic and suggest you do too, unless you are interested in expanding uBasic into a truely useful tool.
+
 --------------------
 
-Build
+# Build
 
-git clone
+> git clone https://github.com/cjstoddard/ubasic-picocalc
 
-cd 
+> cd ubasic-picocalc
 
-mkdir build && cd build
+> git clone https://github.com/adamdunkels/ubasic.git
 
-cmake -DPICO_BOARD=pico2 ..
+> mkdir build && cd build
 
-make -j
+> cmake -DPICO_BOARD=pico2 ..
+
+> make -j 4
+
 --------------------
 
-picocalc-text-starter
+# picocalc-text-starter
+
 Copyright (c) 2025 Blair Leduc
+
 MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,8 +48,10 @@ SOFTWARE.
 
 --------------------
 
-uBasic
+# uBasic
+
 Copyright (c) 2006, Adam Dunkels
+
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without 
