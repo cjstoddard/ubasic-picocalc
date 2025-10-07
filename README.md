@@ -4,9 +4,13 @@ This is a port of [uBasic](https://github.com/adamdunkels/ubasic) to the PicoCal
 
 Please goto the uBasic github repo and read the documentation, uBasic is fairly limited in what it can do, so don't be too surprised if things don't work the way you want them to. In all fairness, this lacks too many features, including access to the GPIO, to make it super useful for anything other than a toy. I use PicoMite Basic and suggest you do too, unless you are interested in expanding uBasic into a truely useful tool.
 
+For the record, all (most?) of my code is contained within main.c There is no modifications made to the uBasic code proper. I altered onboard_led.c (or maybe I just over wrote it with the one in the SDK?) in the driver folder to eliminate an annoying error message I was getting, otherwise all the other driver code is unaltered. I did not fork uBasic directly because I barely understand my own code and I do not want to be picking through someone elses 20 year old code, so I decided to simply write a program that integrates drivers into uBasic with minimal fuss and very little work.
+
 --------------------
 
 # Build
+
+This assumes you have the SDK installed and working.
 
 > git clone https://github.com/cjstoddard/ubasic-picocalc
 
