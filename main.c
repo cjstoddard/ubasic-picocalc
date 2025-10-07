@@ -316,8 +316,8 @@ int main(void){
     keyboard_set_background_poll(true);
 
     printf("\x1b[2J\x1b[H");
-    printf("    **** PICOCALC uBASIC V1 ****\r\n");
-    printf("--------------------------------\r\n");
+    printf("      **** PICOCALC uBASIC V1 ****\r\n");
+    printf("----------------------------------------\r\n");
     printf("READY.\r\n");
 
     char line[256];
