@@ -1,6 +1,6 @@
 # uBasic for the PicoCalc
 
-So, what is this all about anyway? The is already to solid entries into running the Basic Programming language on the PicoCalc, PicoMite Basic and 
+So, what is this all about anyway? The is already two solid entries into running the Basic Programming language on the PicoCalc, PicoMite Basic and 
 Phyllosoma, so why bother porting uBasic at all. These are good questions and the answer is, because I wanted to do it. I did not do this because I did not like PicoMite or Phyllosoma, in fact both serve their purposes very well and I suggest you use one of them rather than uBasic. I in fact prefer PicoMite Basic and it is what I use. In spite of the messy code base and the rather gruff and unwelcoming developer, PicoMite is good at what it does. This is simply a proof of concept project more than anything else.
 
 This is a port of [uBasic](https://github.com/adamdunkels/ubasic) to the PicoCalc using [picocalc-text-starter](https://github.com/BlairLeduc/picocalc-text-starter). This is a straight up port, the only thing I added was a REPL command shell for loading and saving programs to the SD Card. Please consider this Alpha software, it is not extensively tested and most assuradly has bugs that will fail in spectacular ways. It is also incomplete,  it needs an editor, a way to run commands interactively and uBasic needs to be expanded to be more useful.
