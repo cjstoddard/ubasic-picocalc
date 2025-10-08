@@ -1,6 +1,9 @@
 # uBasic for the PicoCalc
 
-This is a port of [uBasic](https://github.com/adamdunkels/ubasic) to the PicoCalc using [picocalc-text-starter](https://github.com/BlairLeduc/picocalc-text-starter). This is a straight up port, the only thing I added was a REPL command shell for loading and saving programs to the SD Card. Please consider this Alpha software, it is not extensively tested and most assuradly has bugs and will probably fail in spectacular ways. It probably needs an editor, a way to run programs interactively and uBasic needs to be expanded to be more useful. This was more of a proof of concept project than it was to build something complete and useful, so it is unlikely that I will do much more with it.
+So, what is this all about anyway? The is already to solid entries into running the Basic Programming language on the PicoCalc, PicoMite Basic and 
+Phyllosoma, so why bother porting uBasic at all. These are good questions and the answer is, because I wanted to do it. I did not do this because I did not like PicoMite or Phyllosoma, in fact both serve their purposes very well and I suggest you use one of them rather than uBasic. I in fact prefer PicoMite Basic and it is what I use. In spite of the messy code base and the rather gruff and unwelcoming developer, PicoMite is good at what it does. This is simply a proof of concept project more than anything else.
+
+This is a port of [uBasic](https://github.com/adamdunkels/ubasic) to the PicoCalc using [picocalc-text-starter](https://github.com/BlairLeduc/picocalc-text-starter). This is a straight up port, the only thing I added was a REPL command shell for loading and saving programs to the SD Card. Please consider this Alpha software, it is not extensively tested and most assuradly has bugs that will fail in spectacular ways. It is also incomplete,  it needs an editor, a way to run commands interactively and uBasic needs to be expanded to be more useful.
 
 Please goto the uBasic github repo and read the documentation, uBasic is fairly limited in what it can do, so don't be too surprised if things don't work the way you want them to. In all fairness, this lacks too many features, including access to the GPIO, to make it super useful for anything other than a toy. I use PicoMite Basic and suggest you do too, unless you are interested in expanding uBasic into a truely useful tool.
 
@@ -26,31 +29,9 @@ This assumes you have the SDK installed and working.
 
 --------------------
 
-# picocalc-text-starter
+# Acknowledgments
 
-Copyright (c) 2025 Blair Leduc
-
-MIT License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
---------------------
+This project would not be possible without the hard work of Adam Dunkels and Blair Leduc. These two people did all the heavy lifting, all I did was stitch their work together.
 
 # uBasic
 
@@ -80,4 +61,29 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# picocalc-text-starter
+
+Copyright (c) 2025 Blair Leduc
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
 
