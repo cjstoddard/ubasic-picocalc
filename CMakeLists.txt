@@ -1,20 +1,17 @@
 cmake_minimum_required(VERSION 3.13)
 
-# Import the Pico SDK (expects pico_sdk_import.cmake in your tree or provided by PICO_SDK_PATH)
 include(pico_sdk_import.cmake)
 
 project(ubasic_picocalc C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
-# Target the Raspberry Pi Pico 2 (RP2350)
 set(PICO_BOARD pico2)
 
 pico_sdk_init()
 
 add_executable(ubasic_picocalc
     main.c
-    # PicoCalc drivers
     drivers/audio.c
     drivers/display.c
     drivers/keyboard.c
@@ -27,13 +24,12 @@ add_executable(ubasic_picocalc
     drivers/southbridge.c
     drivers/font-5x10.c
     drivers/font-8x10.c
-    drivers/clib.c        # stdio shim so fopen()/fgets() hit the SD card
-    # uBasic
+    drivers/clib.c
+
     ubasic/ubasic.c
     ubasic/tokenizer.c
 )
 
-# Generate PIO header for audio (adjust the path if your .pio lives elsewhere)
 pico_generate_pio_header(ubasic_picocalc ${CMAKE_CURRENT_LIST_DIR}/drivers/audio.pio)
 
 target_include_directories(ubasic_picocalc PRIVATE
@@ -51,10 +47,8 @@ target_link_libraries(ubasic_picocalc PRIVATE
     pico_multicore
 )
 
-# Enable both USB and UART stdio
 pico_enable_stdio_usb(ubasic_picocalc 1)
 pico_enable_stdio_uart(ubasic_picocalc 1)
 
-# Create UF2/ELF/bin
 pico_add_extra_outputs(ubasic_picocalc)
 

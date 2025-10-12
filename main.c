@@ -6,19 +6,16 @@
 
 #include "pico/stdlib.h"
 
-/* PicoCalc drivers */
 #include "drivers/picocalc.h"
 #include "drivers/keyboard.h"
-#include "drivers/fat32.h"   // for fat32_dir_create()
+#include "drivers/fat32.h"
 
 /* uBASIC */
 #include "ubasic/ubasic.h"
 #include "ubasic/tokenizer.h"
 
-/* Toggled by keyboard driver (BREAK/ATTN) */
 volatile bool user_interrupt = false;
 
-/* ============================ Keyboard helpers ============================ */
 static inline void kb_service(void) { keyboard_poll(); }
 
 static int kb_getch_nonblock(void) {
@@ -40,7 +37,6 @@ static void read_line(char *buf, size_t maxlen) {
     }
 }
 
-/* ============================ Program store / editor ============================ */
 #define MAX_LINES       512
 #define MAX_LINE_CHARS  160
 
@@ -78,12 +74,10 @@ static int prog_max_line(void) {
     return g_line_count ? g_lines[g_line_count-1].number : 0;
 }
 
-/* Lowercase keywords outside of strings for this uBASIC build */
 static void lowercase_outside_strings(char *s) {
     int in_str=0; for (; *s; ++s) { if (*s=='"'){ in_str=!in_str; continue; } if (!in_str) *s=(char)tolower((unsigned char)*s); }
 }
 
-/* Build program text WITH line numbers + LF endings + lowercased keywords */
 static char *prog_build_buffer(size_t *out_size) {
     size_t total = 1;
     for (int i=0;i<g_line_count;++i) {
@@ -102,7 +96,6 @@ static char *prog_build_buffer(size_t *out_size) {
     return buf;
 }
 
-/* Ensure a NUMBERED 'end' exists (e.g., "65535 end") so ubasic_finished() becomes true. */
 static char *ensure_program_has_numbered_end(char *buf) {
     const char *s = buf;
     while (*s) {
@@ -125,21 +118,17 @@ static char *ensure_program_has_numbered_end(char *buf) {
     return nbuf;
 }
 
-/* ============================ stdio-based SAVE / LOAD ============================ */
-
-/* Create /ubasic if missing (ignore "already exists" errors). Uses FAT32 API directly. */
 static void ensure_ubasic_dir(void) {
     fat32_file_t d;
     fat32_error_t rc = fat32_dir_create(&d, "/ubasic");
     if (rc == FAT32_OK) fat32_close(&d);
 }
 
-/* fopen helpers that try a few reasonable paths */
 static FILE *try_open_for_write(const char *name, char out_path[256]) {
     static const char *prefixes[] = { "/ubasic/", "/", "" };
     for (int i=0;i<3;++i) {
         snprintf(out_path, 256, "%s%s", prefixes[i], name);
-        FILE *fp = fopen(out_path, "wb");   // create/overwrite
+        FILE *fp = fopen(out_path, "wb");
         if (fp) return fp;
     }
     return NULL;
@@ -148,7 +137,6 @@ static FILE *try_open_for_read(const char *name, char out_path[256]) {
     static const char *prefixes[] = { "/ubasic/", "/", "" };
     char cand[256];
 
-    // Try as typed, then uppercase (helps if 8.3 uppercase names are present)
     for (int pass=0; pass<2; ++pass) {
         const char *target = name;
         char up[256];
@@ -172,7 +160,6 @@ static int save_program_file(const char *typed_name) {
     char *buf = prog_build_buffer(&sz);
     if (!buf) { printf("ERROR: out of memory\r\n"); return -1; }
 
-    /* Save exactly what you wrote; RUN will append a numbered END if needed */
     ensure_ubasic_dir();
 
     char path[256];
@@ -197,7 +184,6 @@ static int load_program_file(const char *typed_name) {
     FILE *fp = try_open_for_read(typed_name, path);
     if (!fp) { printf("ERROR: LOAD failed (file not found)\r\n"); return -1; }
 
-    // Read line-by-line (works with LF/CRLF/CR)
     prog_line_t tmp[MAX_LINES];
     int tmp_count = 0;
     for (int i = 0; i < MAX_LINES; ++i) { tmp[i].number = 0; tmp[i].text = NULL; }
@@ -205,16 +191,13 @@ static int load_program_file(const char *typed_name) {
     char linebuf[512];
     int next_num = 10;
     while (fgets(linebuf, sizeof linebuf, fp)) {
-        // strip trailing CR/LF
         size_t n = strlen(linebuf);
         while (n && (linebuf[n-1] == '\n' || linebuf[n-1] == '\r')) linebuf[--n] = 0;
 
-        // skip empty lines
         char *p = linebuf;
         while (*p == ' ' || *p == '\t') p++;
         if (!*p) continue;
 
-        // parse optional leading line number
         char *q = p;
         while (isdigit((unsigned char)*q)) q++;
         int num = -1;
@@ -242,7 +225,6 @@ static int load_program_file(const char *typed_name) {
         return -1;
     }
 
-    // Commit to program store
     prog_clear();
     for (int i = 0; i < tmp_count; ++i) {
         prog_insert_or_replace(tmp[i].number, tmp[i].text);
@@ -252,7 +234,6 @@ static int load_program_file(const char *typed_name) {
     return 0;
 }
 
-/* Handy: show raw file contents */
 static void type_file(const char *name) {
     char path[256];
     FILE *fp = try_open_for_read(name, path);
@@ -264,7 +245,6 @@ static void type_file(const char *name) {
     printf("\r\n---------------\r\n");
 }
 
-/* ============================ Helpers ============================ */
 static void trim_inplace(char *s) {
     char *p=s; while(*p && isspace((unsigned char)*p)) p++; if(p!=s) memmove(s,p,strlen(p)+1);
     size_t n=strlen(s); while(n && isspace((unsigned char)s[n-1])) s[--n]=0;
@@ -281,7 +261,6 @@ static void print_help(void){
     printf("  (Or: <num> <text> to add/replace; '<num>' alone deletes.)\r\n");
 }
 
-/* ============================ Run ============================ */
 static void run_current_program(void) {
     if (!g_line_count) { printf("(no program)\r\n"); return; }
     user_interrupt = false;
@@ -305,11 +284,9 @@ static void run_current_program(void) {
     printf("\r\nREADY.\r\n");
 }
 
-/* ============================ Main / REPL ============================ */
 int main(void){
     stdio_init_all();
 
-    /* Sets up display/keyboard, wires stdio to SD via drivers/clib.c, etc. */
     picocalc_init();
 
     keyboard_init();
@@ -328,7 +305,7 @@ int main(void){
         if(!*line) continue;
 
         char *p=line;
-        if(isdigit((unsigned char)*p)){       // program line
+        if(isdigit((unsigned char)*p)){
             long num=strtol(p,&p,10);
             if(num<=0||num>65535){ printf("ERROR: line number 1..65535\r\n"); continue; }
             while(*p==' '||*p=='\t') p++;
