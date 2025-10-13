@@ -10,7 +10,6 @@
 #include "drivers/keyboard.h"
 #include "drivers/fat32.h"
 
-/* uBASIC */
 #include "ubasic/ubasic.h"
 #include "ubasic/tokenizer.h"
 
@@ -54,7 +53,7 @@ static int prog_find_index(int number) {
 }
 static void prog_insert_or_replace(int number, const char *text) {
     while (*text==' '||*text=='\t') text++;
-    if (!*text) { // delete
+    if (!*text) {
         int idx = prog_find_index(number);
         if (idx >= 0) { free(g_lines[idx].text); for (int j=idx+1;j<g_line_count;++j) g_lines[j-1]=g_lines[j]; g_line_count--; }
         return;
@@ -82,7 +81,7 @@ static char *prog_build_buffer(size_t *out_size) {
     size_t total = 1;
     for (int i=0;i<g_line_count;++i) {
         const char *t=g_lines[i].text?g_lines[i].text:"";
-        total += 6 + strlen(t) + 1; // "65535 "+text+"\n"
+        total += 6 + strlen(t) + 1;
     }
     char *buf = (char*)malloc(total+1); if(!buf) return NULL;
     size_t pos=0;
